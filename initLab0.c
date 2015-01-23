@@ -32,6 +32,13 @@ void initSW1(){
 
 void initTimer1(){
     //TODO: Initialize the timer
+    T1CON = 0x00;
+    TMR1 = 0x00;
+    PR1 = 0xffff;
+   
+
+    IFS0bits.T1IF = 0;
+    IEC0bits.T1IE = 1; //Enable Timer Interrupt
     T1CONbits.TON = 1;
     T1CONbits.TCKPS = 0b00;
     // What to do? On the refference page 125

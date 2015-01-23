@@ -41,10 +41,12 @@ typedef enum stateTypeEnum{
 
 } stateType;
 
+volatile stateType curState;
+volatile stateType nextState;
 
 int main(void)
 {
-
+    
     //TODO: Finish these functions in the provided c files
     initLEDs();
     initTimer1();
@@ -53,14 +55,51 @@ int main(void)
     while(1)
     {
         //Use a switch statement to define the behavior based on the state
-        switch(stateType){
+        switch(curState){
             case(forwardstage1):
+
+                if(PORTBbits.RB5 == 0){
+                    LATBbits.LATB12 = 0;
+                    LATBbits.LATB13 = 1;
+                    LATBbits.LATB14 = 1;
+                    LATBbits.LATB15 = 1;
+                    nextState = forwardstage2;
+                }
+                else
+                    nextState = forwardstage1;                
                 break;
             case(forwardstage2):
+                if(PORTBbits.RB5 == 0){
+                    LATBbits.LATB12 = 1;
+                    LATBbits.LATB13 = 0;
+                    LATBbits.LATB14 = 1;
+                    LATBbits.LATB15 = 1;
+                    nextState = forwardstage3;
+                }
+                else
+                    nextState = forwardstage2;
                 break;
             case(forwardstage3):
+                if(PORTBbits.RB5 == 0){
+                    LATBbits.LATB12 = 1;
+                    LATBbits.LATB13 = 1;
+                    LATBbits.LATB14 = 0;
+                    LATBbits.LATB15 = 1;
+                    nextState = forwardstage4;
+                }
+                else
+                    nextState = forwardstage3;
                 break;
             case(forwardstage4):
+                if(PORTBbits.RB5 == 0){
+                    LATBbits.LATB12 = 1;
+                    LATBbits.LATB13 = 1;
+                    LATBbits.LATB14 = 1;
+                    LATBbits.LATB15 = 0;
+                    nextState = forwardstage1;
+                }
+                else
+                    nextState = forwardstage4;
                 break;
             case(backwardstage1):
                 break;
@@ -70,6 +109,8 @@ int main(void)
                 break;
             case(backwardstage4):
                 break;
+            default:
+                curState = forwardstage1;
         }
     }
     return 0;
@@ -80,5 +121,6 @@ void _ISR _T1Interrupt(void){
     IFS0bits.T1IF = 0;
 
     //TODO: Change states if necessary.
+    curState = nextState;
     //Make sure if you use any variables that they are declared volatile!
 }
