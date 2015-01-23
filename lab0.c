@@ -29,7 +29,16 @@ _CONFIG2( IESO_OFF & SOSCSEL_SOSC & WUTSEL_LEG & FNOSC_PRIPLL & FCKSM_CSDCMD & O
 typedef enum stateTypeEnum{
     //TODO: Define states by name
     //test
-    apple
+    forwardstage1,
+    forwardstage2,
+    forwardstage3,
+    forwardstage4,
+    backwardstage1,
+    backwardstage2,
+    backwardstage3,
+    backwardstage4
+
+
 } stateType;
 
 
@@ -44,9 +53,24 @@ int main(void)
     while(1)
     {
         //Use a switch statement to define the behavior based on the state
-//        switch(){
-//
-//        }
+        switch(stateType){
+            case(forwardstage1):
+                break;
+            case(forwardstage2):
+                break;
+            case(forwardstage3):
+                break;
+            case(forwardstage4):
+                break;
+            case(backwardstage1):
+                break;
+            case(backwardstage2):
+                break;
+            case(backwardstage3):
+                break;
+            case(backwardstage4):
+                break;
+        }
     }
     return 0;
 }

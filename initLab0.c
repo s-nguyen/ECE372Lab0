@@ -33,6 +33,7 @@ void initSW1(){
 void initTimer1(){
     //TODO: Initialize the timer
     T1CONbits.TON = 1;
+    T1CONbits.TCKPS = 0b00;
     // What to do? On the refference page 125
     //Prescaler at 1:1
 
