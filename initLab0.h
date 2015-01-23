@@ -14,6 +14,8 @@
 #define LED5 LATBbits.LATB14
 #define LED6 LATBbits.LATB13
 #define LED7 LATBbits.LATB12
+#define INPUT 1
+#define OUTPUT 0
 
 #define OFF 1;
 #define ON 0;

@@ -29,6 +29,7 @@ _CONFIG2( IESO_OFF & SOSCSEL_SOSC & WUTSEL_LEG & FNOSC_PRIPLL & FCKSM_CSDCMD & O
 typedef enum stateTypeEnum{
     //TODO: Define states by name
     //test
+    apple
 } stateType;
 
 
