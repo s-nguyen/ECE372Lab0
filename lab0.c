@@ -51,51 +51,52 @@ int main(void)
     initLEDs();
     initTimer1();
     initSW1();
+
+
     
     while(1)
     {
         //Use a switch statement to define the behavior based on the state
         switch(curState){
             case(forwardstage1):
-
+                LATBbits.LATB12 = 0;
+                LATBbits.LATB13 = 1;
+                LATBbits.LATB14 = 1;
+                LATBbits.LATB15 = 1;
                 if(PORTBbits.RB5 == 0){
-                    LATBbits.LATB12 = 0;
-                    LATBbits.LATB13 = 1;
-                    LATBbits.LATB14 = 1;
-                    LATBbits.LATB15 = 1;
-                    nextState = forwardstage2;
+                    nextState = forwardstage2; //Sets nextstate to 2 if button is pressed
                 }
                 else
                     nextState = forwardstage1;                
                 break;
             case(forwardstage2):
+               LATBbits.LATB12 = 1;
+                LATBbits.LATB13 = 0;
+                LATBbits.LATB14 = 1;
+                LATBbits.LATB15 = 1;
                 if(PORTBbits.RB5 == 0){
-                    LATBbits.LATB12 = 1;
-                    LATBbits.LATB13 = 0;
-                    LATBbits.LATB14 = 1;
-                    LATBbits.LATB15 = 1;
                     nextState = forwardstage3;
                 }
                 else
                     nextState = forwardstage2;
                 break;
             case(forwardstage3):
+                LATBbits.LATB12 = 1;
+                LATBbits.LATB13 = 1;
+                LATBbits.LATB14 = 0;
+                LATBbits.LATB15 = 1;
                 if(PORTBbits.RB5 == 0){
-                    LATBbits.LATB12 = 1;
-                    LATBbits.LATB13 = 1;
-                    LATBbits.LATB14 = 0;
-                    LATBbits.LATB15 = 1;
                     nextState = forwardstage4;
                 }
                 else
                     nextState = forwardstage3;
                 break;
             case(forwardstage4):
+                LATBbits.LATB12 = 1;
+                LATBbits.LATB13 = 1;
+                LATBbits.LATB14 = 1;
+                LATBbits.LATB15 = 0;
                 if(PORTBbits.RB5 == 0){
-                    LATBbits.LATB12 = 1;
-                    LATBbits.LATB13 = 1;
-                    LATBbits.LATB14 = 1;
-                    LATBbits.LATB15 = 0;
                     nextState = forwardstage1;
                 }
                 else
@@ -118,9 +119,12 @@ int main(void)
 
 void _ISR _T1Interrupt(void){
     //TODO: Put down the timer 1 flag first!
-    IFS0bits.T1IF = 0;
+    
 
     //TODO: Change states if necessary.
-    curState = nextState;
+    if(PORTBbits.RB5 == 1) //Button is released
+        IFS0bits.T1IF = 0;
+        curState = nextState;
     //Make sure if you use any variables that they are declared volatile!
 }
+
