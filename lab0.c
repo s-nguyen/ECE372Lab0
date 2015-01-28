@@ -119,12 +119,17 @@ int main(void)
 
 void _ISR _T1Interrupt(void){
     //TODO: Put down the timer 1 flag first!
-    
-
+    IFS0bits.T1IF = 0;
+    LATBbits.LATB12 = !LATBbits.LATB12;
     //TODO: Change states if necessary.
-    if(PORTBbits.RB5 == 1) //Button is released
-        IFS0bits.T1IF = 0;
+    if(PORTBbits.RB5 == 0) //Button is Pressed
         curState = nextState;
     //Make sure if you use any variables that they are declared volatile!
 }
 
+void _ISR _CNInterrupt(void){
+    IFS1bits.CNIF = 0;
+   /* if(PORTBbits.RB5 == 0){
+        curState = nextState;
+    }*/
+}
