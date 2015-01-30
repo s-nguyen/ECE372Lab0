@@ -8,12 +8,10 @@
 #include "p24fj64ga002.h"
 #include "initLab0.h"
 
-#define CLOCKRATE = 7372800
-#define SOSCATATE = 32768
-#define PLL = 2
-#define FCY = CLOCKRATE*PLL
-#define TIME = 2 //In Seconds
-#define PRVAL = (FCY*TIME)/256
+#define FOCS  7372800.0
+#define FCY  3686400.0//FOCS/2
+#define TIME  2.0 //seconds
+
 
 void initLEDs(){
   
@@ -36,20 +34,18 @@ void initSW1(){
     IFS1bits.CNIF = 0;
     IEC1bits.CNIE = 1;
     CNEN2bits.CN27IE = 1;
-
 }
 
 
 void initTimer1(){
-   
+    unsigned int prVal = (FCY*TIME)/256.0 - 1.0;
+    PR1 = prVal; //PRVAL //2 Seconds
 
     TMR1 = 0;
-    PR1 = 500; //Change
-
-  
-
-    T1CONbits.TON = 1; //Turn on timer
     T1CONbits.TCKPS = 0b11; //1:256 prescale Value
     IFS0bits.T1IF = 0;
-    IEC0bits.T1IE = 1; //Enable Timer Interrupt
+    IEC0bits.T1IE = 1; //Enable Timer Interrupt at start
+    T1CONbits.TON = 0; //Turn off  timer
 }
+
+
