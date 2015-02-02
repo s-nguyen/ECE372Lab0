@@ -29,7 +29,7 @@ _CONFIG2( IESO_OFF & SOSCSEL_SOSC & WUTSEL_LEG & FNOSC_PRI & FCKSM_CSDCMD & OSCI
 typedef enum stateTypeEnum{
    
    
-    LED1F, LED2F, LED3F, LED4F, LED1B, LED2B, LED3B, LED4B //F for forward B for backwards
+    LED1F, LED2F, LED3F, LED4F //F for forward B for backwards
     
 
 } stateType;
@@ -46,36 +46,20 @@ int main(void)
     {
         switch(curState){
             case(LED1F):
-                LedSwitch(1);
+                LedSwitch(4);
                 nextState = LED2F;
                 break;
             case(LED2F):
-                LedSwitch(2);
+                LedSwitch(3);
                 nextState = LED3F;
                 break;
             case(LED3F):
-                LedSwitch(3);
+                LedSwitch(2);
                 nextState = LED4F;
                 break;
             case(LED4F):
-                LedSwitch(4);
-                nextState = LED1F;
-                break;
-            case(LED1B):
                 LedSwitch(1);
-                nextState = LED4B;
-                break;
-            case(LED2B):
-                LedSwitch(2);
-                nextState = LED1B;
-                break;
-            case(LED3B):
-                LedSwitch(3);
-                nextState = LED2B;
-                break;
-            case(LED4B):
-                LedSwitch(4);
-                nextState = LED3B;
+                nextState = LED1F;
                 break;
             default:
                 curState = LED1F;
@@ -103,28 +87,16 @@ void _ISR _T1Interrupt(void){
     T1CONbits.TON = 0;
     switch(curState){
         case(LED1F):
-            nextState = LED1B;
+            nextState = LED4F;
             break;
         case(LED2F):
-            nextState = LED2B;
-            break;
-        case(LED3F):
-            nextState = LED3B;
-            break;
-        case(LED4F):
-            nextState = LED4B;
-            break;
-        case(LED1B):
             nextState = LED1F;
             break;
-        case(LED2B):
+        case(LED3F):
             nextState = LED2F;
             break;
-        case(LED3B):
+        case(LED4F):
             nextState = LED3F;
-            break;
-        case(LED4B):
-            nextState = LED4F;
             break;
     }
 
