@@ -2,7 +2,7 @@
 //
 // File:         lab0.c
 // Date:         
-// Authors:      
+// Authors:      Stephen Nguyen
 //
 // Description:  Lab 0 assignment for ECE 372 Spring 2015.
 // ******************************************************************************************* //
