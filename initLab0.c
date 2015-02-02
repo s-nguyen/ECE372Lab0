@@ -1,6 +1,6 @@
 /*
 * File:   initLab0.c
-* Author: 
+* Author: Stephen Nguyen
 *
 * Created on December 27, 2014, 1:31 PM
 */
@@ -41,9 +41,9 @@ void initTimer1(){
     unsigned int prVal = (FCY*TIME)/256.0 - 1.0;
     PR1 = prVal; //PRVAL //2 Seconds
 
-    TMR1 = 0;
+    TMR1 = 0; //Reset the counter to 0
     T1CONbits.TCKPS = 0b11; //1:256 prescale Value
-    IFS0bits.T1IF = 0;
+    IFS0bits.T1IF = 0; //Put down flag first
     IEC0bits.T1IE = 1; //Enable Timer Interrupt at start
     T1CONbits.TON = 0; //Turn off  timer
 }

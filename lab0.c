@@ -27,9 +27,9 @@ _CONFIG2( IESO_OFF & SOSCSEL_SOSC & WUTSEL_LEG & FNOSC_PRI & FCKSM_CSDCMD & OSCI
 
 
 typedef enum stateTypeEnum{
-    //TODO: Define states by name
    
-    LED1F, LED2F, LED3F, LED4F, LED1B, LED2B, LED3B, LED4B
+   
+    LED1F, LED2F, LED3F, LED4F, LED1B, LED2B, LED3B, LED4B //F for forward B for backwards
     
 
 } stateType;
@@ -39,14 +39,11 @@ volatile stateType nextState;
 
 int main(void)
 {
-    
-    //TODO: Finish these functions in the provided c files
     initLEDs();
     initTimer1();
     initSW1();
     while(1)
     {
-        //Use a switch statement to define the behavior based on the state
         switch(curState){
             case(LED1F):
                 LedSwitch(1);
@@ -101,10 +98,9 @@ void _ISR _CNInterrupt(void){
 }
 
 void _ISR _T1Interrupt(void){
-    //TODO: Put down the timer 1 flag first!
+    //Put down the timer 1 flag first!
     IFS0bits.T1IF = 0;
     T1CONbits.TON = 0;
-    //TODO: Change states if necessary.
     switch(curState){
         case(LED1F):
             nextState = LED1B;
@@ -131,8 +127,7 @@ void _ISR _T1Interrupt(void){
             nextState = LED4F;
             break;
     }
-    
-   
+
     //Make sure if you use any variables that they are declared volatile!
 }
 
@@ -148,7 +143,7 @@ void checkHold(){
     
 }
 
-
+//LED Switching Function
 void LedSwitch(int led){
     switch(led){
         case(1):

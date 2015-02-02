@@ -1,6 +1,6 @@
 /* 
 * File:   initLab0.h
-* Author: 
+* Author: Stephen Nguyen
 *
 * Created on December 27, 2014, 1:31 PM
 */
@@ -23,6 +23,8 @@
 void initLEDs();
 void initSW1();
 void initTimer1();
+
+//new
 void checkHold();
 void LedSwitch(int led);
 
