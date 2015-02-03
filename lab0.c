@@ -34,6 +34,7 @@ typedef enum stateTypeEnum{
 
 } stateType;
 
+
 volatile stateType curState;
 volatile stateType nextState;
 
@@ -44,7 +45,8 @@ int main(void)
     initSW1();
     while(1)
     {
-        switch(curState){
+        if(PORTBbits.RB5 != 0){
+            switch(curState){
             case(LED1F):
                 LedSwitch(4);
                 nextState = LED2F;
@@ -64,20 +66,22 @@ int main(void)
             default:
                 curState = LED1F;
                 break;
+             }
         }
+        
     }
     return 0;
 }
 
 void _ISR _CNInterrupt(void){
     IFS1bits.CNIF = 0;
-    if(PORTBbits.RB5 == 0){
-        
-        checkHold();
+    if(PORTBbits.RB5 == 0){ 
+      T1CONbits.TON = 1; //Turn on timmer
+      TMR1 = 0; //Please reset the timer counter back to zero.... 
     }
-    else if(PORTBbits.RB5 != 0){
+    else if(PORTBbits.RB5 == 1){
+        T1CONbits.TON = 0;
         curState = nextState;
-        
     }
 }
 
@@ -103,44 +107,3 @@ void _ISR _T1Interrupt(void){
     //Make sure if you use any variables that they are declared volatile!
 }
 
-void checkHold(){
-    T1CONbits.TON = 1; //Turn on timmer
-    TMR1 = 0; //Please reset the timer counter back to zero....
-    while(1){
-        if(PORTBbits.RB5 != 0){
-            T1CONbits.TON = 0; //Turn off timmer
-            break;
-        }
-    }
-    
-}
-
-//LED Switching Function
-void LedSwitch(int led){
-    switch(led){
-        case(1):
-            LATBbits.LATB12 = 0;
-            LATBbits.LATB13 = 1;
-            LATBbits.LATB14 = 1;
-            LATBbits.LATB15 = 1;
-            break;
-        case(2):
-            LATBbits.LATB12 = 1;
-            LATBbits.LATB13 = 0;
-            LATBbits.LATB14 = 1;
-            LATBbits.LATB15 = 1;
-            break;
-        case(3):
-            LATBbits.LATB12 = 1;
-            LATBbits.LATB13 = 1;
-            LATBbits.LATB14 = 0;
-            LATBbits.LATB15 = 1;
-            break;
-        case(4):
-            LATBbits.LATB12 = 1;
-            LATBbits.LATB13 = 1;
-            LATBbits.LATB14 = 1;
-            LATBbits.LATB15 = 0;
-            break;
-    }
-}
