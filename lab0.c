@@ -1,7 +1,7 @@
 // ******************************************************************************************* //
 //
 // File:         lab0.c
-// Date:         
+// Date:
 // Authors:      Stephen Nguyen
 //
 // Description:  Lab 0 assignment for ECE 372 Spring 2015.
@@ -27,10 +27,10 @@ _CONFIG2( IESO_OFF & SOSCSEL_SOSC & WUTSEL_LEG & FNOSC_PRI & FCKSM_CSDCMD & OSCI
 
 
 typedef enum stateTypeEnum{
-   
-   
+
+
     LED1F, LED2F, LED3F, LED4F //F for forward B for backwards
-    
+
 
 } stateType;
 
@@ -68,21 +68,23 @@ int main(void)
                 break;
              }
         }
-        
+
     }
     return 0;
 }
 
 void _ISR _CNInterrupt(void){
+     TMR1 = 0; //Please reset the timer counter back to zero....
     IFS1bits.CNIF = 0;
-    if(PORTBbits.RB5 == 0){ 
+    if(PORTBbits.RB5 == 0){
       T1CONbits.TON = 1; //Turn on timmer
-      TMR1 = 0; //Please reset the timer counter back to zero.... 
+      TMR1 = 0; //Please reset the timer counter back to zero....
     }
     else if(PORTBbits.RB5 == 1){
         T1CONbits.TON = 0;
         curState = nextState;
     }
+  
 }
 
 void _ISR _T1Interrupt(void){
